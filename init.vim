@@ -15,7 +15,6 @@ set autoread
 set autowrite
 set splitright
 set splitbelow
-set ttimeout
 set notimeout
 set nottimeout
 set number
@@ -38,8 +37,6 @@ set wildmenu
 set wildmode=list:longest
 set cmdheight=2
 set scrolloff=2
-set autoread 
-set ttyfast
 set mouse = 
 
 
@@ -50,14 +47,13 @@ set nofoldenable
 set noshowmatch
 set nocursorline
 set nocursorcolumn
-set lazyredraw
 set scrolljump=8
 set winminwidth=0
 let html_no_rendering=1
 set nobackup
 set noswapfile
 set noundofile
-set synmaxcol=128
+set synmaxcol=256
 syntax sync minlines=256
 " }}}
 
@@ -91,18 +87,18 @@ set novisualbell
 set noerrorbells
 " }}}
 
+
 " ---------------------------------------------------------------------- {{{
 " ColorSchemes
 " colorscheme default
 colorscheme desert
 " }}}
 "
-"set clipboard=unnamed
 set clipboard+=unnamed
 
 
 set wrap
-set textwidth=100
+" set textwidth=100
 set formatoptions=qrn1
 
 let mapleader = ","
@@ -127,51 +123,16 @@ inoremap <right> <nop>
 
 
 " ---------------------------------------------------------------------- {{{
-" Wrap visual selections with chars
-vnoremap ( "zdi(<C-R>z)<ESC>
-vnoremap { "zdi{<C-R>z}<ESC>
-vnoremap [ "zdi[<C-R>z]<ESC>
-vnoremap ' "zdi'<C-R>z'<ESC>
-vnoremap " "zdi"<C-R>z"<ESC>
-" }}}
-
-
-" ---------------------------------------------------------------------- {{{
-" Map the auto-close for non-quotes
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
-
-" autocmd Syntax html,vim inoremap < <lt>><Left>
-
-function! QuoteDelim(char)
-  let line = getline('.')
-  let col = col('.')
-  if line[col - 2] == "\\"
-    "Inserting a quoted quotation mark into the string
-    return a:char
-  elseif line[col - 1] == a:char
-    "Escaping out of the string
-    return "\<Right>"
-  else
-    "Starting a string
-    return a:char.a:char."\<Left>"
-  endif
-endf 
-
-inoremap " <c-r>=QuoteDelim('"')<CR>
-inoremap ' <c-r>=QuoteDelim("'")<CR>
-" }}}
-
-
-" ---------------------------------------------------------------------- {{{
 " Internal grep
 au QuickfixCmdPost vimgrep cw
 set grepprg=internal
 " }}}
 
 
+" ---------------------------------------------------------------------- {{{
+" Clear search highlight
 vnoremap * "zy:let @/ = @z<CR>n
+" }}}
 
 
 " ======================================================================
@@ -199,10 +160,11 @@ Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'vim-scripts/tComment'
 Plug 'kana/vim-smartchr'
 Plug 'Tabular'
+Plug 'Raimondi/delimitMate'
 
 call plug#end()
+" }}}
 
-filetype plugin indent on
 
 " ---------------------------------------------------------------------- {{{
 " monster.vim
@@ -213,12 +175,11 @@ let g:monster#completion#rcodetools#backend = "async_rct_complete"
 let g:deoplete#sources#omni#input_patterns = {
 \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
 \}
+" }}}
 
 
 " ---------------------------------------------------------------------- {{{
 " yankround.vim
-" nmap p <Plug>(miniyank-startput)
-" nmap <C-p> <Plug>(miniyank-cycle)
 nmap p <Plug>(yankround-p)
 nmap P <Plug>(yankround-P)
 nmap <C-p> <Plug>(yankround-prev)
@@ -226,8 +187,13 @@ nmap <C-n> <Plug>(yankround-next)
 let g:yankround_max_history = 50
 " }}}
 
-let g:deoplete#enable_at_startup = 1
+
+" ---------------------------------------------------------------------- {{{
+" deoplete
+let g:deoplete#enable_at_startup = 0
 let g:pymode_python = 'python3'
+" }}}
+
 
 " ---------------------------------------------------------------------- {{{
 " Tabularize
@@ -278,6 +244,7 @@ if &encoding !=# 'utf-8'
 end
 " }}}
 
+
 " ---------------------------------------------------------------------- {{{
 " fzf.vim
 let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
@@ -291,8 +258,7 @@ nmap <silent> <Leader>b :<C-u>Buffers<CR>
 
 
 " ---------------------------------------------------------------------- {{{
-" pi method
-
 " change indent
 vnoremap <silent> > > v '>
 vnoremap <silent> < < v '>
+" }}}
