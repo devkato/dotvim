@@ -1,7 +1,3 @@
-" ================================================================================
-"
-" ================================================================================
-
 " --------------------------------------------------------------------------------
 " Editor Display Settings
 " --------------------------------------------------------------------------------
@@ -38,6 +34,9 @@ set wildmode=list:longest
 set cmdheight=2
 set scrolloff=2
 set mouse = 
+set clipboard+=unnamed
+set wrap
+set formatoptions=qrn1
 
 
 " draw performance tuning ------------------------------------------------------------- {{{
@@ -94,12 +93,6 @@ set noerrorbells
 colorscheme desert
 " }}}
 "
-set clipboard+=unnamed
-
-
-set wrap
-" set textwidth=100
-set formatoptions=qrn1
 
 let mapleader = ","
 nnoremap / /\v
@@ -248,7 +241,8 @@ end
 " ---------------------------------------------------------------------- {{{
 " fzf.vim
 let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
-let g:fzf_layout = { 'down': '~40%' }
+let $FZF_DEFAULT_OPTS = '--reverse'
+let g:fzf_layout = { 'down': '~20%' }
 let g:fzf_buffers_jump = 1
 
 nmap <silent> <Leader>f :<C-u>CtrlPClearCache<CR>
