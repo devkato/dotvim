@@ -18,10 +18,10 @@ set norelativenumber
 set noruler
 
 set tabstop=2
+set expandtab
 set shiftwidth=2
 set softtabstop=2
 
-set expandtab
 set smarttab
 set backspace=indent,eol,start
 set shiftround
@@ -61,8 +61,8 @@ syntax sync minlines=256
 " ???
 set hidden
 set modelines=0
-set list
-set listchars=tab:>-
+" set list
+" set listchars=tab:>-
 " }}}
 
 
@@ -140,15 +140,19 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-coffee-script', { 'for': 'coffee' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'nginx.vim', { 'for': 'nginx' }
-Plug 'othree/html5-syntax.vim'
+Plug 'othree/html5-syntax.vim', { 'for': 'html' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 Plug 'LeafCage/yankround.vim'
 
+" go-lang
+Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'zchee/deoplete-go', { 'for': 'go' }
+
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'osyo-manga/vim-monster'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'vim-scripts/tComment'
 Plug 'kana/vim-smartchr'
@@ -158,17 +162,7 @@ Plug 'Raimondi/delimitMate'
 call plug#end()
 " }}}
 
-
-" ---------------------------------------------------------------------- {{{
-" monster.vim
-" Set async completion.
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-" With deoplete.nvim
-let g:monster#completion#rcodetools#backend = "async_rct_complete"
-let g:deoplete#sources#omni#input_patterns = {
-\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-\}
-" }}}
+let g:javascript_plugin_jsdoc = 1
 
 
 " ---------------------------------------------------------------------- {{{
@@ -183,7 +177,7 @@ let g:yankround_max_history = 50
 
 " ---------------------------------------------------------------------- {{{
 " deoplete
-let g:deoplete#enable_at_startup = 0
+let g:deoplete#enable_at_startup = 1
 let g:pymode_python = 'python3'
 " }}}
 
@@ -225,7 +219,7 @@ set wildignore+=chef-repo/cookbooks,cookbooks " chef
 set wildignore+=node_modules                  " Titanium
 set wildignore+=docs,fuel/vendor,fuel/packages,fuel/core " Python
 set wildignore+=Pods " XCode
-set wildignore+=crawler " Shikidori
+set wildignore+=src/vendor " gae
 " }}}
 
 
@@ -236,13 +230,14 @@ if &encoding !=# 'utf-8'
   set fileencoding=japan
 end
 " }}}
+"
 
 
 " ---------------------------------------------------------------------- {{{
 " fzf.vim
-let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
+let $FZF_DEFAULT_COMMAND = 'ag --ignore vendor -g ""'
 let $FZF_DEFAULT_OPTS = '--reverse'
-let g:fzf_layout = { 'down': '~20%' }
+let g:fzf_layout = { 'up': '~20%' }
 let g:fzf_buffers_jump = 1
 
 nmap <silent> <Leader>f :<C-u>CtrlPClearCache<CR>
