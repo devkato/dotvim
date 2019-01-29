@@ -153,6 +153,25 @@ inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")
 
 
 " ---------------------------------------------------------------------- {{{
+" Japanese Encoding Auto Detection
+if &encoding !=# 'utf-8'
+  set encoding=japan
+  set fileencoding=japan
+end
+" }}}
+
+
+" ---------------------------------------------------------------------- {{{
+" change indent
+nnoremap <Tab> >>_
+nnoremap <S-Tab> <<_
+inoremap <S-Tab> <C-D>
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+" }}}
+
+
+" ---------------------------------------------------------------------- {{{
 " WildMenu
 set wildignore+=.hg,.git,.svn                         " VCS
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg        " Images
