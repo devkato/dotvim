@@ -38,12 +38,6 @@ set list
 set listchars=tab:>-
 " }}}
 
-" ---------------------------------------------------------------------- {{{
-" ColorSchemes
-" colorscheme default
-colorscheme desert
-" }}}
-
 
 " draw performance tuning ------------------------------------------------------------- {{{
 let loaded_matchparen=1
@@ -97,6 +91,12 @@ Plug 'scrooloose/nerdtree'
 
 Plug 'vim-airline/vim-airline'
 
+Plug 'dunstontc/vim-vscode-theme'
+Plug 'vim-scripts/tComment'
+Plug 'kana/vim-smartchr'
+
+" Plug 'valloric/youcompleteme'
+
 call plug#end()
 " }}}
 
@@ -104,6 +104,7 @@ call plug#end()
 " ---------------------------------------------------------------------- {{{
 " fzf.vim
 " let $FZF_DEFAULT_COMMAND = 'ag --ignore vendor -g ""'
+" let $FZF_DEFAULT_COMMAND = 'fzf --ignore vendor --ignore node_modules -g ""'
 let $FZF_DEFAULT_OPTS = '--reverse'
 let g:fzf_layout = { 'up': '~20%' }
 let g:fzf_buffers_jump = 1
@@ -121,4 +122,53 @@ map <C-n> :NERDTreeToggle<CR>
 " }}}
 
 
+" ---------------------------------------------------------------------- {{{
+" ColorSchemes
+" colorscheme default
+" colorscheme desert
+colorscheme dark_plus
+" }}}
 
+
+" ---------------------------------------------------------------------- {{{
+" smartchr
+inoremap <expr> => smartchr#one_of(' => ')
+inoremap <expr> -> smartchr#one_of(' -> ')
+inoremap <expr> == smartchr#one_of(' == ')
+" }}}
+
+
+" ---------------------------------------------------------------------- {{{
+" auto pair(Vanilla vim script)
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+inoremap        (  ()<Left>
+inoremap <expr> )  strpart(getline('.'), col('.')-1, 1) == ")" ? "\<Right>" : ")"
+" }}}
+
+
+" ---------------------------------------------------------------------- {{{
+" WildMenu
+set wildignore+=.hg,.git,.svn                         " VCS
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg        " Images
+set wildignore+=bin/*,vendor/*,log/*,tmp/*                  " Rails
+set wildignore+=*.jar,*.class                         " Java
+set wildignore+=rebar,tags,*.beam,deps/*,rel/*,doc/*,*/ebin/* " Erlang
+set wildignore+=*.lzo,*.zip,*.gz,*.tgz,*.tar          " Compressed files
+set wildignore+=*.log,BLANK,*.log.[0-9]*,*.lock,*.pid " log, lock, pid files"
+set wildignore+=*.DS_Store                            " OS X
+set wildignore+=CVS                           " OS X
+set wildignore+=coverage                      " OS X
+set wildignore+=spec/reports                  " OS X
+set wildignore+=*.pyc                         " Python
+set wildignore+=chef-repo/cookbooks,cookbooks " chef
+set wildignore+=node_modules                  " Titanium
+set wildignore+=docs,fuel/vendor,fuel/packages,fuel/core " Python
+set wildignore+=Pods " XCode
+set wildignore+=src/vendor " gae
+" }}}
